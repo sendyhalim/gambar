@@ -1,0 +1,7 @@
+# Ignored directories
+.build/
+Packages/
+
+# Ignored files
+.DS_Store
+*.xcodeproj
