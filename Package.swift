@@ -5,12 +5,19 @@ import PackageDescription
 
 let package = Package(
   name: "Gambar",
-  dependencies: [],
+  dependencies: [
+    .package(url: "https://github.com/Quick/Quick", from: "1.2.0")
+  ],
   targets: [
     .target(name: "GambarImage"),
     .target(
       name: "Gambar",
       dependencies: ["GambarImage"]
+    ),
+    .testTarget(
+      name: "GambarTests",
+      dependencies: ["GambarImage", "Quick", "Nimble"],
+      path: "./Tests/"
     )
   ]
 )
