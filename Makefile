@@ -1,4 +1,8 @@
 generate-xcode-project:
 	swift package generate-xcodeproj
 
-.PHONY: generate-xcode-project
+install-dependencies:
+	swift package update
+	make generate-xcode-project
+
+.PHONY: generate-xcode-project install-dependencies
