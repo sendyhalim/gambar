@@ -6,14 +6,15 @@ import PackageDescription
 let package = Package(
   name: "Gambar",
   dependencies: [
-    .package(url: "https://github.com/Quick/Quick", from: "1.2.0")
+    .package(url: "https://github.com/Quick/Quick", from: "1.2.0"),
+    .package(url: "https://github.com/kylef/Commander", .branch("master"))
   ],
   targets: [
-    .target(name: "GambarImage"),
     .target(
       name: "Gambar",
-      dependencies: ["GambarImage"]
+      dependencies: ["GambarImage", "Commander"]
     ),
+    .target(name: "GambarImage"),
     .testTarget(
       name: "GambarTests",
       dependencies: ["GambarImage", "Quick", "Nimble"],
