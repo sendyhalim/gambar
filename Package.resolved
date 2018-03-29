@@ -20,12 +20,30 @@
         }
       },
       {
+        "package": "FileCheck",
+        "repositoryURL": "https://github.com/trill-lang/FileCheck.git",
+        "state": {
+          "branch": null,
+          "revision": "34ea75a35780396a2cfa5019ec799879b48dd960",
+          "version": "0.0.6"
+        }
+      },
+      {
         "package": "Nimble",
         "repositoryURL": "https://github.com/Quick/Nimble.git",
         "state": {
           "branch": null,
           "revision": "22800b0954c89344bb8c87f8ab93378076716fb7",
           "version": "7.0.3"
+        }
+      },
+      {
+        "package": "Operadics",
+        "repositoryURL": "https://github.com/typelift/Operadics.git",
+        "state": {
+          "branch": null,
+          "revision": "c2a14919b3653a39a9bf268c1ae0bf71ad6833fe",
+          "version": "0.3.0"
         }
       },
       {
@@ -47,11 +65,38 @@
         }
       },
       {
+        "package": "SwiftCheck",
+        "repositoryURL": "https://github.com/typelift/SwiftCheck.git",
+        "state": {
+          "branch": null,
+          "revision": "df82fb889864945c64458f38846702af729b3ee4",
+          "version": "0.9.1"
+        }
+      },
+      {
         "package": "SwiftGD",
         "repositoryURL": "https://github.com/twostraws/SwiftGD.git",
         "state": {
           "branch": "master",
           "revision": "fd3079a9c672cffed25696ab0394490a3f6e5ba9",
+          "version": null
+        }
+      },
+      {
+        "package": "Swiftx",
+        "repositoryURL": "https://github.com/typelift/Swiftx.git",
+        "state": {
+          "branch": null,
+          "revision": "140f1510ecb8597970c58c5a41a32bda72310d31",
+          "version": "0.6.0"
+        }
+      },
+      {
+        "package": "Swiftz",
+        "repositoryURL": "https://github.com/typelift/Swiftz",
+        "state": {
+          "branch": "master",
+          "revision": "5afb89805c1b4ca2e2d3747e25dfd9ed966a28ba",
           "version": null
         }
       }

@@ -8,7 +8,8 @@ let package = Package(
   dependencies: [
     .package(url: "https://github.com/Quick/Quick", from: "1.2.0"),
     .package(url: "https://github.com/kylef/Commander", .branch("master")),
-    .package(url: "https://github.com/twostraws/SwiftGD.git", .branch("master"))
+    .package(url: "https://github.com/twostraws/SwiftGD.git", .branch("master")),
+    .package(url: "https://github.com/typelift/Swiftz", .branch("master"))
   ],
   targets: [
     .target(
@@ -17,7 +18,7 @@ let package = Package(
     ),
     .target(
       name: "GambarImage",
-      dependencies: ["SwiftGD"]
+      dependencies: ["SwiftGD", "Swiftz"]
     ),
     .testTarget(
       name: "GambarTests",
