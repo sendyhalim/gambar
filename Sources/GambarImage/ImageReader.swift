@@ -1,8 +1,17 @@
 import Foundation
 import SwiftGD
+import Swiftz
+import Operadics
 
 public enum ImageReaderError: Swift.Error {
   case imageNotFound(path: String)
+}
+
+func points(width: Int, height: Int) -> List<Point> {
+  let xs = List(fromArray: Array(0 ..< width))
+  let ys = List(fromArray: Array(0 ..< height))
+
+  return curry(Point.init) <^> xs <*> ys
 }
 
 public struct ImageReader {
