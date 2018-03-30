@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
   name: "Gambar",
   dependencies: [
-    .package(url: "https://github.com/Quick/Quick", from: "1.2.0"),
     .package(url: "https://github.com/kylef/Commander", .branch("master")),
+    .package(url: "https://github.com/kylef/Spectre.git", .branch("master")),
     .package(url: "https://github.com/twostraws/SwiftGD.git", .branch("master")),
     .package(url: "https://github.com/typelift/Swiftz", .branch("master"))
   ],
@@ -21,9 +21,9 @@ let package = Package(
       dependencies: ["SwiftGD", "Swiftz"]
     ),
     .testTarget(
-      name: "GambarTests",
-      dependencies: ["GambarImage", "Quick", "Nimble"],
-      path: "./Tests/"
+      name: "GambarImageTests",
+      dependencies: ["GambarImage", "Spectre"],
+      path: "./Tests/GambarImageTests"
     )
   ]
 )
