@@ -32,14 +32,30 @@ func pixelAtPoint(image: Image, point: Point) -> RGBA {
   )
 }
 
-func groupPoints(by size: Int, pointMatrix: Array<Array<Point>>) -> Array<Array<Point>> {
+func groupPoints(by size: Int, pointMatrix: Array<Array<Point>>) -> Array<Array<Array<Point>>> {
+  let matrixSize = size * size
   let splitted = pointMatrix.map {
-    splitBy(f: { $0.y % size == 0 }, items: $0)
+    splitBy(
+      f: { _, index in
+        (index % size) == 0
+      },
+      items: $0
+    )
   }
 
-  return splitted.dropFirst().reduce(splitted.first!) { acc, ys in
-   return zipWith(f: (+), xs: acc, ys: ys)
-  }
+  return splitted
+    .dropFirst()
+    .reduce(splitted.first!) { acc, ys in
+      return zipWith(f: (+), xs: acc, ys: ys)
+    }
+    .map {
+      splitBy(
+        f: { _, index in
+          (index % matrixSize) == 0
+        },
+        items: $0
+      )
+    }
 }
 
 public struct ImageReader {
@@ -47,19 +63,21 @@ public struct ImageReader {
     guard File.exists(path: path) else {
       throw ImageReaderError.imageNotFound(path: path)
     }
-    
+
     let url = URL(fileURLWithPath: path)
 
     return Image(url: url)!
   }
 
-  public static func pixels(path: String) throws -> Array<Array<RGBA>> {
+  public static func pixels(path: String) throws -> Array<Array<Array<RGBA>>> {
     let image = try read(path: path)
     let imagePixel = curry(pixelAtPoint)(image)
     let pointMatrix = points(width: image.size.width, height: image.size.height)
 
     return groupPoints(by: 3, pointMatrix: pointMatrix).map {
-      $0.map(imagePixel)
+      $0.map {
+        $0.map(imagePixel)
+      }
     }
   }
 }
