@@ -7,14 +7,14 @@ struct ArrayUtilsSpec {
     $0.describe("splitBy()") {
       $0.context("given empty array") {
         $0.it("should return empty array") {
-          try expect(splitBy(f: { _ in true }, items: []).count) == 0
+          try expect(splitBy(f: { _, _ in true }, items: []).count) == 0
         }
       }
 
       $0.context("given uneven split condition") {
         $0.it("should split correctly") {
-          let result = splitBy(f: {
-            $0 % 3 == 0
+          let result = splitBy(f: { item, index in
+            (item % 3) == 0
           }, items: [0, 1, 2, 3, 4, 5, 6, 7])
           
           let expectations = [
@@ -48,6 +48,22 @@ struct ArrayUtilsSpec {
           let result = zipWith(f: (+), xs: [1, 2, 3], ys: [4, 5, 6])
 
           try expect(result) == [5, 7, 9]
+        }
+      }
+
+      $0.context("given matrix") {
+        $0.it("should zip the matrix properly") {
+          let result = zipWith(f: (+), xs: [[1, 2], [4], [5, 6, 7]], ys: [[9, 10, 11], [99, 88, 77], [3]])
+
+          let expectations = [
+            [1, 2, 9, 10, 11],
+            [4, 99, 88, 77],
+            [5, 6, 7, 3]
+          ]
+
+          for i in (0 ..< result.count) {
+            try expect(result[i]) == expectations[i]
+          }
         }
       }
 
