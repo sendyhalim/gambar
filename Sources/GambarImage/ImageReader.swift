@@ -2,8 +2,6 @@ import Foundation
 import SwiftGD
 import Swiftz
 
-public typealias RGBA = (Int, Int, Int, Double)
-
 public enum ImageReaderError: Swift.Error {
   case imageNotFound(path: String)
 }
@@ -17,14 +15,14 @@ func points(width: Int, height: Int) -> Array<Array<Point>> {
   }
 }
 
-func pixelAtPoint(image: Image, point: Point) -> RGBA {
+func pixelAtPoint(image: Image, point: Point) -> Color.RGBA {
   let color = image.get(pixel: point)
 
-  return (
-    toRGB(color.redComponent),
-    toRGB(color.greenComponent),
-    toRGB(color.blueComponent),
-    color.alphaComponent
+  return toRGBA(
+    red: color.redComponent,
+    green: color.greenComponent,
+    blue: color.blueComponent,
+    alpha: color.alphaComponent
   )
 }
 
@@ -65,7 +63,7 @@ public struct ImageReader {
     return Image(url: url)!
   }
 
-  public static func pixels(path: String) throws -> Array<Array<Array<RGBA>>> {
+  public static func pixels(path: String) throws -> Array<Array<Array<Color.RGBA>>> {
     let image = try read(path: path)
     let imagePixel = curry(pixelAtPoint)(image)
     let pointMatrix = points(width: image.size.width, height: image.size.height)
