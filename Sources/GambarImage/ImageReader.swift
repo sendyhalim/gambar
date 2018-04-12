@@ -17,10 +17,6 @@ func points(width: Int, height: Int) -> Array<Array<Point>> {
   }
 }
 
-func toRGB(_ colorValue: Double) -> Int {
-  return Int(colorValue * 255)
-}
-
 func pixelAtPoint(image: Image, point: Point) -> RGBA {
   let color = image.get(pixel: point)
 
