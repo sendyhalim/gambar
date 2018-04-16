@@ -19,13 +19,39 @@ func times(_ lhs: Int, _ rhs: Double) -> Int {
   return Int(Double(lhs) * rhs)
 }
 
-func toGrayScale(color: Color.RGBA) -> Color.RGBA {
-  let (red, green, blue, alpha) = color
+func toGrayScale(color: Color.RGBA) -> Double {
+  let (red, green, blue, _) = color
 
-  return (
-    times(red, 0.21),
-    times(green, 0.72),
-    times(blue, 0.07),
-    alpha
-  )
+  return 0.299 * Double(red) + 0.587 * Double(green) + 0.114 * Double(blue)
+}
+
+func toCharacter(grayScale: Double) -> String {
+  switch grayScale {
+  case 0..<50:
+    return "@"
+
+  case 50..<70:
+    return "#"
+
+  case 70..<100:
+    return "8"
+
+  case 100..<130:
+    return "&"
+
+  case 130..<160:
+    return "o"
+
+  case 160..<180:
+    return ":"
+
+  case 180..<200:
+    return "*"
+
+  case 200..<230:
+    return "."
+
+ default:
+    return " "
+  }
 }

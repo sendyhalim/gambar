@@ -26,12 +26,12 @@ func pixelAtPoint(image: Image, point: Point) -> Color.RGBA {
   )
 }
 
-func groupPoints(by size: Int, pointMatrix: Array<Array<Point>>) -> Array<Array<Array<Point>>> {
-  let matrixSize = size * size
+func groupPoints(by size: Size, pointMatrix: Array<Array<Point>>) -> Array<Array<Array<Point>>> {
+  let matrixSize = size.width * size.height
   let splitted = pointMatrix.map {
     splitBy(
       f: { _, index in
-        (index % size) == 0
+        (index % size.height) == 0
       },
       items: $0
     )
@@ -52,6 +52,10 @@ func groupPoints(by size: Int, pointMatrix: Array<Array<Point>>) -> Array<Array<
     }
 }
 
+func average(numbers: Array<Double>) -> Double {
+  return numbers.reduce(0, (+)) / Double(numbers.count)
+}
+
 public struct ImageReader {
   public static func read(path: String) throws -> Image {
     guard File.exists(path: path) else {
@@ -63,15 +67,22 @@ public struct ImageReader {
     return Image(url: url)!
   }
 
-  public static func pixels(path: String) throws -> Array<Array<Array<Color.RGBA>>> {
+  public static func asciiString(path: String) throws -> String {
     let image = try read(path: path)
-    let imagePixel = curry(pixelAtPoint)(image)
-    let pointMatrix = points(width: image.size.width, height: image.size.height)
-
-    return groupPoints(by: 3, pointMatrix: pointMatrix).map {
-      $0.map {
-        $0.map(imagePixel)
-      }
+    let grayScalePixel = {
+      toGrayScale(color: pixelAtPoint(image: image, point: $0))
     }
+    let pointMatrix = points(width: image.size.width, height: image.size.height)
+    let size = Size(width: 3, height: 3)
+
+    return groupPoints(by: size, pointMatrix: pointMatrix)
+      .map { groups in
+        groups
+          .map { $0.map(grayScalePixel) }
+          .map(average)
+          .map(toCharacter)
+          .reduce("", (+))
+      }
+      .joined(separator: "\n")
   }
 }
