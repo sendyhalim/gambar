@@ -6,16 +6,7 @@ public enum ImageReaderError: Swift.Error {
   case imageNotFound(path: String)
 }
 
-func points(width: Int, height: Int) -> Array<Array<Point>> {
-  let xs = Array(0 ..< width)
-  let ys = Array(0 ..< height)
-
-  return xs.map { x in
-    ys.map(curry(Point.init)(x))
-  }
-}
-
-func pixelAtPoint(image: Image, point: Point) -> Color.RGBA {
+func colorAtPoint(image: Image, point: Point) -> Color.RGBA {
   let color = image.get(pixel: point)
 
   return toRGBA(
@@ -26,34 +17,56 @@ func pixelAtPoint(image: Image, point: Point) -> Color.RGBA {
   )
 }
 
-func groupPoints(by size: Size, pointMatrix: Array<Array<Point>>) -> Array<Array<Array<Point>>> {
-  let matrixSize = size.width * size.height
-  let splitted = pointMatrix.map {
-    splitBy(
-      f: { _, index in
-        (index % size.height) == 0
-      },
-      items: $0
-    )
-  }
-
-  return splitted
-    .dropFirst()
-    .reduce(splitted.first!) { acc, ys in
-      return zipWith(f: (+), xs: acc, ys: ys)
-    }
-    .map {
-      splitBy(
-        f: { _, index in
-          (index % matrixSize) == 0
-        },
-        items: $0
-      )
-    }
-}
-
 func average(numbers: Array<Double>) -> Double {
   return numbers.reduce(0, (+)) / Double(numbers.count)
+}
+
+func shrink(blockSize: Size, actualSize: Size) -> Size {
+  return Size(
+    width: Int(ceil(Double(actualSize.width) / Double(blockSize.width))),
+    height: Int(ceil(Double(actualSize.height) / Double(blockSize.height)))
+  )
+}
+
+func character(cursor: Point, block: Size, image: Image) -> String {
+  let maxX = min((cursor.x + block.width), image.size.width)
+  let maxY = min((cursor.y + block.height), image.size.height)
+
+  let xs = Array(cursor.x ..< maxX)
+  let ys = Array(cursor.y ..< maxY)
+
+  let grayScales: Array<Double> = xs.flatMap { x in
+    return ys.map { y in
+      let color = colorAtPoint(image: image, point: Point(x: x, y: y))
+
+      return toGrayScale(color: color)
+    }
+  }
+
+  return toCharacter(grayScale: average(numbers: grayScales))
+}
+
+func asciiArt(blockSize: Size, image: Image) -> String {
+  let shrinkedSize = shrink(blockSize: blockSize, actualSize: image.size)
+  let xs = Array(0 ..< shrinkedSize.width)
+  let ys = Array(0 ..< shrinkedSize.height)
+
+  return ys.reduce("") { acc, y in
+    let next = xs.reduce(acc) { acc, x in
+      let cursor = Point(x: x * blockSize.width, y: y * blockSize.height)
+
+      return acc + character(cursor: cursor, block: blockSize, image: image)
+    }
+
+    return next + "\n"
+  }
+}
+
+func calculateBlockSize(size: Size) -> Size {
+  return Size(
+    width: Int(round(Double(size.width) / 100)),
+    height: Int(round(Double(size.height) / 100))
+  )
 }
 
 public struct ImageReader {
@@ -69,20 +82,8 @@ public struct ImageReader {
 
   public static func asciiString(path: String) throws -> String {
     let image = try read(path: path)
-    let grayScalePixel = {
-      toGrayScale(color: pixelAtPoint(image: image, point: $0))
-    }
-    let pointMatrix = points(width: image.size.width, height: image.size.height)
-    let size = Size(width: 3, height: 3)
+    let blockSize = calculateBlockSize(size: image.size)
 
-    return groupPoints(by: size, pointMatrix: pointMatrix)
-      .map { groups in
-        groups
-          .map { $0.map(grayScalePixel) }
-          .map(average)
-          .map(toCharacter)
-          .reduce("", (+))
-      }
-      .joined(separator: "\n")
+    return asciiArt(blockSize: blockSize, image: image)
   }
 }

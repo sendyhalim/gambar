@@ -1,3 +1,4 @@
+import SwiftGD
 import Spectre
 import Swiftz
 
@@ -5,42 +6,28 @@ import Swiftz
 
 struct ImageReaderSpec {
   static let run: (ContextType) -> Void = {
-    $0.describe("points(width:height:)") {
-      $0.describe("given 0 width") {
-        $0.it("should return empty points") {
-          try expect(points(width: 0, height: 10).count) == 0
+    $0.describe("shrink(blockSize:actualSize:)") {
+      $0.describe("when actualSize is divisible by blockSize") {
+        $0.it("should shrink correctly") {
+          let blockSize = Size(width: 3, height: 3)
+          let actualSize = Size(width: 30, height: 60)
+          let shrinkedSize = shrink(blockSize: blockSize, actualSize: actualSize)
+
+          try expect(shrinkedSize.width) == 10
+          try expect(shrinkedSize.height) == 20
         }
       }
 
-      $0.describe("given 0 height") {
-        $0.it("should return 10 empty vertical points") {
-          try expect(points(width: 10, height: 0).count) == 10
+      $0.describe("when actualSize is not divisible by blockSize") {
+        $0.it("should shrink correctly") {
+          let blockSize = Size(width: 3, height: 3)
+          let actualSize = Size(width: 31, height: 67)
+          let shrinkedSize = shrink(blockSize: blockSize, actualSize: actualSize)
+
+          try expect(shrinkedSize.width) == 11
+          try expect(shrinkedSize.height) == 23
         }
-      }
-
-      $0.describe("given 3 width and 2 height") {
-        $0.it("should return 6 points") {
-          let _points = List(fromArray: points(width: 3, height: 2)
-            .flatMap { $0 }
-            .map { ($0.x, $0.y) }
-          )
-
-          let expectation = List(fromArray: [
-            (0, 0), (0, 1),
-            (1, 0), (1, 1),
-            (2, 0), (2, 1)
-          ])
-
-          let correctResult = _points.mzip(expectation).reduce({ (acc, pairs) in
-            let (result, expectation) = pairs
-
-            return acc ? result == expectation : acc
-          }, initial: true)
-
-          try expect(_points.count) == 6
-          try expect(correctResult) == true
-        }
-      }
+     }
     }
   }
 }
