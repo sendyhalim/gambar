@@ -64,8 +64,8 @@ func asciiArt(blockSize: Size, image: Image) -> String {
 
 func calculateBlockSize(size: Size) -> Size {
   return Size(
-    width: Int(round(Double(size.width) / 100)),
-    height: Int(round(Double(size.height) / 100))
+    width: Int(round(Double(size.width) / 125)),
+    height: Int(round(Double(size.height) / 75))
   )
 }
 
