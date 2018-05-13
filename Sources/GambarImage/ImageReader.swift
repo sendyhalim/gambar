@@ -2,23 +2,37 @@ import Foundation
 import SwiftGD
 import Swiftz
 
+extension Point: BitmapPoint { }
+
+extension Image: Bitmap {
+  public func color(point: BitmapPoint) -> Color.RGBA {
+    let color = get(pixel: point as! Point)
+
+    return toRGBA(
+      red: color.redComponent,
+      green: color.greenComponent,
+      blue: color.blueComponent,
+      alpha: color.alphaComponent
+    )
+  }
+
+
+  public func getSize() -> Size {
+    return Size(width: size.width, height: size.height)
+  }
+}
+
 public enum ImageReaderError: Swift.Error {
   case imageNotFound(path: String)
 }
 
-func colorAtPoint(image: Image, point: Point) -> Color.RGBA {
-  let color = image.get(pixel: point)
 
-  return toRGBA(
-    red: color.redComponent,
-    green: color.greenComponent,
-    blue: color.blueComponent,
-    alpha: color.alphaComponent
-  )
+func sum(_ numbers: Array<Double>) -> Double {
+  return numbers.reduce(0, (+))
 }
 
-func average(numbers: Array<Double>) -> Double {
-  return numbers.reduce(0, (+)) / Double(numbers.count)
+func average(_ numbers: Array<Double>) -> Double {
+  return sum(numbers) / Double(numbers.count)
 }
 
 func shrink(blockSize: Size, actualSize: Size) -> Size {
@@ -28,32 +42,32 @@ func shrink(blockSize: Size, actualSize: Size) -> Size {
   )
 }
 
-func character(cursor: Point, block: Size, image: Image) -> String {
-  let maxX = min((cursor.x + block.width), image.size.width)
-  let maxY = min((cursor.y + block.height), image.size.height)
+func character(cursor: BitmapPoint, block: Size, image: Bitmap) -> String {
+  let maxX = min((cursor.x + block.width), Int(image.getSize().width))
+  let maxY = min((cursor.y + block.height), Int(image.getSize().height))
 
   let xs = Array(cursor.x ..< maxX)
   let ys = Array(cursor.y ..< maxY)
 
   let grayScales: Array<Double> = xs.flatMap { x in
     return ys.map { y in
-      let color = colorAtPoint(image: image, point: Point(x: x, y: y))
+      let color = image.color(point: Point(x: x, y: y))
 
       return toGrayScale(color: color)
     }
   }
 
-  return toCharacter(grayScale: average(numbers: grayScales))
+  return toCharacter(grayScale: average(grayScales))
 }
 
-func asciiArt(blockSize: Size, image: Image) -> String {
-  let shrinkedSize = shrink(blockSize: blockSize, actualSize: image.size)
-  let xs = Array(0 ..< shrinkedSize.width)
-  let ys = Array(0 ..< shrinkedSize.height)
+func asciiArt(blockSize: Size, image: Bitmap) -> String {
+  let shrinkedSize = shrink(blockSize: blockSize, actualSize: image.getSize())
+  let xs = Array(0 ..< Int(shrinkedSize.width))
+  let ys = Array(0 ..< Int(shrinkedSize.height))
 
   return ys.reduce("") { acc, y in
     let next = xs.reduce(acc) { acc, x in
-      let cursor = Point(x: x * blockSize.width, y: y * blockSize.height)
+      let cursor = Point(x: x * Int(blockSize.width), y: y * Int(blockSize.height))
 
       return acc + character(cursor: cursor, block: blockSize, image: image)
     }
@@ -64,8 +78,8 @@ func asciiArt(blockSize: Size, image: Image) -> String {
 
 func calculateBlockSize(size: Size) -> Size {
   return Size(
-    width: Int(round(Double(size.width) / 125)),
-    height: Int(round(Double(size.height) / 75))
+    width: Int(round(Double(size.width) / 200)),
+    height: Int(round(Double(size.height) / 100))
   )
 }
 
@@ -82,7 +96,7 @@ public struct ImageReader {
 
   public static func asciiString(path: String) throws -> String {
     let image = try read(path: path)
-    let blockSize = calculateBlockSize(size: image.size)
+    let blockSize = calculateBlockSize(size: image.getSize())
 
     return asciiArt(blockSize: blockSize, image: image)
   }

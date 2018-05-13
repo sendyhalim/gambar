@@ -1,3 +1,5 @@
+import Foundation
+
 public struct Color {
   public typealias RGBA = (Int, Int, Int, Double)
 }
@@ -22,36 +24,20 @@ func times(_ lhs: Int, _ rhs: Double) -> Int {
 func toGrayScale(color: Color.RGBA) -> Double {
   let (red, green, blue, _) = color
 
-  return 0.299 * Double(red) + 0.587 * Double(green) + 0.114 * Double(blue)
+  return (0.299 * Double(red)) +
+    (0.587 * Double(green)) +
+    (0.114 * Double(blue))
 }
 
+let characters: Array<String> = Array<String>([
+  "$", "@", "B", "%", "h", "k", "b", "d", "p", "q", "w", "m",
+  "O", "0", "Q", "C", "Y", "X",  "c", "x", "r", "j", "f", "t",
+  "/", "\\", "|", "(", ")", "1", "{", "}", "[", "]", "-", "+", ";", ",", "\"", "^", "`",
+  "\'", ",", ",", ".", ".", " ", " ", " ", " ", " ", " "
+].reversed())
+
 func toCharacter(grayScale: Double) -> String {
-  switch grayScale {
-  case 0..<50:
-    return "@"
+  let index = Int(grayScale / 255.0 * Double(characters.count - 1))
 
-  case 50..<70:
-    return "#"
-
-  case 70..<100:
-    return "8"
-
-  case 100..<130:
-    return "&"
-
-  case 130..<160:
-    return "o"
-
-  case 160..<180:
-    return ":"
-
-  case 180..<200:
-    return "*"
-
-  case 200..<230:
-    return "."
-
- default:
-    return " "
-  }
+  return characters[index]
 }
