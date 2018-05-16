@@ -2,8 +2,11 @@ import XCTest
 import Spectre
 
 class GambarImageTests: XCTestCase {
-  func testGambarImage() {
+  func testFileSpec() {
     describe("FileSpec", FileSpec.run)
-    describe("ImageReaderSpec", ImageReaderSpec.run)
+  }
+
+  func testASCIIArtSpec() {
+    describe("ASCIIArtSpec", ASCIIArtSpec.run)
   }
 }
