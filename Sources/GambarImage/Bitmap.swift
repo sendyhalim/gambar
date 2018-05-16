@@ -7,11 +7,9 @@ public struct Size {
 }
 
 /// A structure that represents a point in a bitmap image
-public protocol BitmapPoint {
-  var x: Int { get }
-  var y: Int { get }
-}
+public typealias BitmapPoint = (Int, Int)
 
+/// Bitmap representation of an image
 public protocol Bitmap {
   func color(point: BitmapPoint) -> Color.RGBA
   func getSize() -> Size
