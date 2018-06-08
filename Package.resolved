@@ -20,24 +20,6 @@
         }
       },
       {
-        "package": "FileCheck",
-        "repositoryURL": "https://github.com/llvm-swift/FileCheck.git",
-        "state": {
-          "branch": null,
-          "revision": "e5871587ddf85c0bcf84f773925655f2f83ef336",
-          "version": "0.0.7"
-        }
-      },
-      {
-        "package": "Operadics",
-        "repositoryURL": "https://github.com/typelift/Operadics.git",
-        "state": {
-          "branch": null,
-          "revision": "c2a14919b3653a39a9bf268c1ae0bf71ad6833fe",
-          "version": "0.3.0"
-        }
-      },
-      {
         "package": "Spectre",
         "repositoryURL": "https://github.com/kylef/Spectre.git",
         "state": {
@@ -47,38 +29,11 @@
         }
       },
       {
-        "package": "SwiftCheck",
-        "repositoryURL": "https://github.com/typelift/SwiftCheck.git",
-        "state": {
-          "branch": null,
-          "revision": "43ffe7ab48366c36a697c54bcdd257876edd6fc6",
-          "version": "0.10.0"
-        }
-      },
-      {
         "package": "SwiftGD",
         "repositoryURL": "https://github.com/twostraws/SwiftGD.git",
         "state": {
           "branch": "master",
           "revision": "b038d13ef40ce6d11aa3599181e45f099814a053",
-          "version": null
-        }
-      },
-      {
-        "package": "Swiftx",
-        "repositoryURL": "https://github.com/typelift/Swiftx.git",
-        "state": {
-          "branch": null,
-          "revision": "7c1d3e4bd0db0fd09623e12b2f5863db9f37becb",
-          "version": "0.7.0"
-        }
-      },
-      {
-        "package": "Swiftz",
-        "repositoryURL": "https://github.com/typelift/Swiftz",
-        "state": {
-          "branch": "master",
-          "revision": "556236ad2d7c7420eea4301cf69b09575905a508",
           "version": null
         }
       },
