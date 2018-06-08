@@ -1,4 +1,5 @@
 # Gambar
+<img src="https://raw.githubusercontent.com/sendyhalim/gambar/master/examples/result.png" width="600">
 A cli tool to generate ASCII Art from image.
 
 ## Usage
