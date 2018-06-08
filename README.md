@@ -1,14 +1,25 @@
 # Gambar
 A cli tool to generate ASCII Art from image.
 
-## Development
+## Usage
 ```
-# macOS
+gambar /path/to/image
+
+# Or save it to a file
+gambar /path/to/image > image.txt
+cat image.txt
+```
+
+## Installation
+```
+# MacOS
 brew install gd
 
-# linux
+# Linux
 sudo apt-get libgd-dev
 
 # Install dependencies
-make install-dependencies
+git clone https://github.com/sendyhalim/gambar
+cd gambar
+make install
 ```
