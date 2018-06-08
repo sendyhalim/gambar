@@ -21,11 +21,11 @@
       },
       {
         "package": "FileCheck",
-        "repositoryURL": "https://github.com/trill-lang/FileCheck.git",
+        "repositoryURL": "https://github.com/llvm-swift/FileCheck.git",
         "state": {
           "branch": null,
-          "revision": "34ea75a35780396a2cfa5019ec799879b48dd960",
-          "version": "0.0.6"
+          "revision": "e5871587ddf85c0bcf84f773925655f2f83ef336",
+          "version": "0.0.7"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/typelift/SwiftCheck.git",
         "state": {
           "branch": null,
-          "revision": "df82fb889864945c64458f38846702af729b3ee4",
-          "version": "0.9.1"
+          "revision": "43ffe7ab48366c36a697c54bcdd257876edd6fc6",
+          "version": "0.10.0"
         }
       },
       {
@@ -60,7 +60,7 @@
         "repositoryURL": "https://github.com/twostraws/SwiftGD.git",
         "state": {
           "branch": "master",
-          "revision": "fd3079a9c672cffed25696ab0394490a3f6e5ba9",
+          "revision": "b038d13ef40ce6d11aa3599181e45f099814a053",
           "version": null
         }
       },
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/typelift/Swiftx.git",
         "state": {
           "branch": null,
-          "revision": "140f1510ecb8597970c58c5a41a32bda72310d31",
-          "version": "0.6.0"
+          "revision": "7c1d3e4bd0db0fd09623e12b2f5863db9f37becb",
+          "version": "0.7.0"
         }
       },
       {
@@ -78,8 +78,17 @@
         "repositoryURL": "https://github.com/typelift/Swiftz",
         "state": {
           "branch": "master",
-          "revision": "5afb89805c1b4ca2e2d3747e25dfd9ed966a28ba",
+          "revision": "556236ad2d7c7420eea4301cf69b09575905a508",
           "version": null
+        }
+      },
+      {
+        "package": "Swort",
+        "repositoryURL": "https://github.com/sendyhalim/Swort",
+        "state": {
+          "branch": null,
+          "revision": "25982dd69f3585693eacabf02a97756943f7ebda",
+          "version": "0.0.2"
         }
       }
     ]

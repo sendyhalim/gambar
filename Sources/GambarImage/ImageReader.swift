@@ -1,22 +1,24 @@
 import Foundation
+
 import class SwiftGD.Image
 import struct SwiftGD.Point
+import Swort
 
 extension Image: Bitmap {
-  public func color(point: BitmapPoint) -> Color.RGBA {
+  public func color(point: BitmapPoint) -> Color {
     let (x, y) = point
     let color = get(pixel: Point(x: x, y: y))
 
-    return toRGBA(
+    return Color(rgba: toRGBA(
       red: color.redComponent,
       green: color.greenComponent,
       blue: color.blueComponent,
       alpha: color.alphaComponent
-    )
+    ))
   }
 
   public func getSize() -> Size {
-    return Size(width: size.width, height: size.height)
+    return Size(width: self.size.width, height: self.size.height)
   }
 }
 
@@ -39,6 +41,6 @@ public struct ImageReader {
     let image = try read(path: path)
     let blockSize = calculateBlockSize(size: image.getSize())
 
-    return asciiArt(blockSize: blockSize, image: image)
+    return createAsciiArt(blockSize: blockSize, image: image)
   }
 }

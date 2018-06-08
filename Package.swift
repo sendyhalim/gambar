@@ -9,7 +9,8 @@ let package = Package(
     .package(url: "https://github.com/kylef/Commander", .branch("master")),
     .package(url: "https://github.com/kylef/Spectre.git", .branch("master")),
     .package(url: "https://github.com/twostraws/SwiftGD.git", .branch("master")),
-    .package(url: "https://github.com/typelift/Swiftz", .branch("master"))
+    .package(url: "https://github.com/typelift/Swiftz", .branch("master")),
+    .package(url: "https://github.com/sendyhalim/Swort", from: "0.0.2")
   ],
   targets: [
     .target(
@@ -18,7 +19,7 @@ let package = Package(
     ),
     .target(
       name: "GambarImage",
-      dependencies: ["SwiftGD", "Swiftz"]
+      dependencies: ["SwiftGD", "Swiftz", "Swort"]
     ),
     .testTarget(
       name: "GambarImageTests",
