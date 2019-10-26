@@ -1,4 +1,4 @@
-// swift-tools-version:4.0
+// swift-tools-version:5.1
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,10 +6,11 @@ import PackageDescription
 let package = Package(
   name: "Gambar",
   dependencies: [
-    .package(url: "https://github.com/kylef/Commander", .branch("master")),
-    .package(url: "https://github.com/kylef/Spectre.git", .branch("master")),
-    .package(url: "https://github.com/twostraws/SwiftGD.git", .branch("master")),
-    .package(url: "https://github.com/sendyhalim/Swort", from: "0.0.2")
+    .package(url: "https://github.com/kylef/Commander", .upToNextMajor(from: "0.9.1")),
+    .package(url: "https://github.com/Quick/Quick", .upToNextMajor(from: "2.2.0")),
+    .package(url: "https://github.com/Quick/Nimble", .upToNextMajor(from: "8.0.4")),
+    .package(url: "https://github.com/twostraws/SwiftGD", .upToNextMajor(from: "2.5.0")),
+    .package(url: "https://github.com/sendyhalim/Swort", .upToNextMajor(from: "0.0.3"))
   ],
   targets: [
     .target(
@@ -22,7 +23,7 @@ let package = Package(
     ),
     .testTarget(
       name: "GambarImageTests",
-      dependencies: ["GambarImage", "Spectre"],
+      dependencies: ["GambarImage", "Quick", "Nimble"],
       path: "./Tests/GambarImageTests"
     )
   ]
