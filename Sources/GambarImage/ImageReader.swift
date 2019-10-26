@@ -37,9 +37,17 @@ public struct ImageReader {
     return Image(url: url)!
   }
 
-  public static func asciiString(path: String) throws -> String {
+  public static func asciiString(
+    path: String,
+    blockSizeWidthDenominator: Int,
+    blockSizeHeightDenominator: Int
+  ) throws -> String {
     let image = try read(path: path)
-    let blockSize = calculateBlockSize(size: image.getSize())
+    let size = image.getSize()
+    let blockSize = Size(
+      width: Int(round(Double(size.width) / Double(blockSizeWidthDenominator))),
+      height: Int(round(Double(size.height) / Double(blockSizeHeightDenominator)))
+    )
 
     return createAsciiArt(blockSize: blockSize, image: image)
   }
