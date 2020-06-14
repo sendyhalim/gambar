@@ -19,7 +19,7 @@ You'll need to [install swift](https://swift.org/getting-started/#installing-swi
 brew install gd
 
 # Linux
-sudo apt-get libgd-dev
+sudo apt-get install libgd-dev
 
 # Install dependencies
 git clone https://github.com/sendyhalim/gambar
